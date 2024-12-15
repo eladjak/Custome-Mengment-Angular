@@ -1,0 +1,59 @@
+{
+  "name": "customer-management-system",
+  "version": "1.0.0",
+  "description": "מערכת לניהול לקוחות ומשימות",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "server": "nodemon server/index.js",
+    "client": "cd client && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-all": "npm install && cd client && npm install",
+    "build": "cd client && npm run build",
+    "test": "jest",
+    "seed": "node server/seeds/demo-data.js",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "customer",
+    "management",
+    "tasks",
+    "angular",
+    "node",
+    "express",
+    "mongodb"
+  ],
+  "author": {
+    "name": "אלעד יעקובוביץ'",
+    "email": "eladhiteclearning@gmail.com",
+    "url": "https://github.com/eladjak"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "eslint": "^8.56.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2",
+    "prettier": "^3.1.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eladjak/Custome-Mengment-Angular.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eladjak/Custome-Mengment-Angular/issues"
+  },
+  "homepage": "https://github.com/eladjak/Custome-Mengment-Angular#readme"
+} 
