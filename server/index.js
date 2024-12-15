@@ -17,7 +17,7 @@ app.use('/api/customers', customerRoutes);
 app.use('/api/tasks', taskRoutes);
 
 // Connect to MongoDB
-mongoose.connect(config.mongoUri)
+mongoose.connect(config.mongoURI)
   .then(async () => {
     console.log('Connected to MongoDB');
     
