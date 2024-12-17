@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { LoadingService } from './services/loading.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'client';
+  loading$: Observable<boolean>;
+
+  constructor(private loadingService: LoadingService) {
+    this.loading$ = this.loadingService.loading$;
+  }
 }

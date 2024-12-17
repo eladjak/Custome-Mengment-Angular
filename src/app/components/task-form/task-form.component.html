@@ -1,0 +1,187 @@
+<div class="task-form-container">
+  <h2>{{ isEditMode ? "עריכת משימה" : "הוספת משימה חדשה" }}</h2>
+
+  <form
+    [formGroup]="taskForm"
+    (ngSubmit)="onSubmit()"
+    class="task-form"
+    [class.loading]="isLoading"
+  >
+    <!-- Loading Indicator -->
+    <div class="loading-overlay" *ngIf="isLoading">
+      <mat-spinner diameter="50"></mat-spinner>
+      <span>טוען נתונים...</span>
+    </div>
+
+    <!-- Form Fields -->
+    <div class="form-fields">
+      <!-- Task ID -->
+      <mat-form-field appearance="outline">
+        <mat-label>מזהה משימה</mat-label>
+        <input matInput formControlName="taskId" readonly />
+        <mat-error
+          *ngIf="
+            taskForm.get('taskId')?.touched &&
+            taskForm.get('taskId')?.errors?.['required']
+          "
+        >
+          שדה חובה
+        </mat-error>
+        <mat-error
+          *ngIf="
+            taskForm.get('taskId')?.touched &&
+            taskForm.get('taskId')?.errors?.['minlength']
+          "
+        >
+          מזהה המשימה חייב להכיל לפחות 3 תווים
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Title -->
+      <mat-form-field appearance="outline">
+        <mat-label>כותרת</mat-label>
+        <input matInput formControlName="title" />
+        <mat-error
+          *ngIf="
+            taskForm.get('title')?.touched &&
+            taskForm.get('title')?.errors?.['required']
+          "
+        >
+          שדה חובה
+        </mat-error>
+        <mat-error
+          *ngIf="
+            taskForm.get('title')?.touched &&
+            taskForm.get('title')?.errors?.['minlength']
+          "
+        >
+          הכותרת חייבת להכיל לפחות 3 תווים
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Customer -->
+      <mat-form-field appearance="outline">
+        <mat-label>לקוח</mat-label>
+        <mat-select formControlName="customerId">
+          <mat-option *ngFor="let customer of customers" [value]="customer.id">
+            {{ customer.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            taskForm.get('customerId')?.touched &&
+            taskForm.get('customerId')?.errors?.['required']
+          "
+        >
+          שדה חובה
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Description -->
+      <mat-form-field appearance="outline">
+        <mat-label>תיאור</mat-label>
+        <textarea matInput formControlName="description" rows="3"></textarea>
+        <mat-error
+          *ngIf="
+            taskForm.get('description')?.touched &&
+            taskForm.get('description')?.errors?.['required']
+          "
+        >
+          שדה חובה
+        </mat-error>
+        <mat-error
+          *ngIf="
+            taskForm.get('description')?.touched &&
+            taskForm.get('description')?.errors?.['minlength']
+          "
+        >
+          התיאור חייב להכיל לפחות 10 תווים
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Due Date, Status, Priority Row -->
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>תאריך יעד</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dueDate" />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error
+            *ngIf="
+              taskForm.get('dueDate')?.touched &&
+              taskForm.get('dueDate')?.errors?.['required']
+            "
+          >
+            שדה חובה
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>סטטוס</mat-label>
+          <mat-select formControlName="status">
+            <mat-option
+              *ngFor="let option of statusOptions"
+              [value]="option.value"
+            >
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              taskForm.get('status')?.touched &&
+              taskForm.get('status')?.errors?.['required']
+            "
+          >
+            שדה חובה
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>עדיפות</mat-label>
+          <mat-select formControlName="priority">
+            <mat-option
+              *ngFor="let option of priorityOptions"
+              [value]="option.value"
+            >
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              taskForm.get('priority')?.touched &&
+              taskForm.get('priority')?.errors?.['required']
+            "
+          >
+            שדה חובה
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!taskForm.valid || isSubmitting || isLoading"
+      >
+        <mat-icon>{{ isSubmitting ? "hourglass_empty" : "save" }}</mat-icon>
+        {{ isSubmitting ? "שומר..." : isEditMode ? "עדכן משימה" : "צור משימה" }}
+      </button>
+
+      <button
+        mat-raised-button
+        type="button"
+        routerLink="/tasks"
+        [disabled]="isSubmitting"
+      >
+        <mat-icon>arrow_back</mat-icon>
+        חזור לרשימה
+      </button>
+    </div>
+  </form>
+</div>
