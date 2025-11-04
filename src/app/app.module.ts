@@ -5,9 +5,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import {
+  MAT_DATE_LOCALE,
+  MAT_DATE_FORMATS,
+  MatNativeDateModule,
+} from '@angular/material/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { ServiceWorkerModule } from '@angular/service-worker';
+
+// Environment
 import { environment } from '../environments/environment';
 
 // Components
@@ -26,7 +32,6 @@ import { routes } from './app.routes';
 
 // Material Module
 import { MaterialModule } from './material.module';
-import { MatNativeDateModule } from '@angular/material/core';
 
 // Custom date formats for Material
 const MY_DATE_FORMATS = {
@@ -39,7 +44,7 @@ const MY_DATE_FORMATS = {
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
   },
-};
+} as const;
 
 /**
  * המודול הראשי של האפליקציה
