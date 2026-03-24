@@ -11,7 +11,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   flex-wrap: wrap;
   gap: 1rem;
 
@@ -31,22 +31,23 @@
     }
   }
 
-  button {
-    white-space: nowrap;
-  }
+  button { white-space: nowrap; }
 }
 
+// ── Desktop table ────────────────────────────────────────────────────────────
 .table-container {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
   overflow-x: auto;
+  border: 1px solid var(--border-subtle);
 
   @media screen and (max-width: 960px) {
     display: none;
   }
 }
 
+// ── Mobile cards ─────────────────────────────────────────────────────────────
 .customer-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -58,28 +59,52 @@
   }
 
   .customer-card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 1.25rem;
+    border: 1px solid var(--border-subtle);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent-grad);
+    }
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--border-default);
+    }
 
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1rem;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.75rem;
 
       .customer-name {
-        font-size: 1.2rem;
-        font-weight: 500;
+        font-size: 1.15rem;
+        font-weight: 600;
         margin: 0;
+        color: var(--text-primary);
       }
 
       .customer-id {
-        color: #666;
-        font-size: 0.9rem;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        background: var(--bg-elevated);
+        padding: 2px 8px;
+        border-radius: 20px;
       }
     }
 
@@ -90,13 +115,15 @@
       margin-bottom: 1rem;
 
       .info-label {
-        color: #666;
+        color: var(--text-muted);
         font-weight: 500;
+        font-size: 0.85rem;
         min-width: 60px;
       }
 
       .info-value {
-        color: #333;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
       }
     }
 
@@ -104,19 +131,21 @@
       display: flex;
       justify-content: flex-end;
       gap: 0.5rem;
-      border-top: 1px solid #eee;
+      border-top: 1px solid var(--border-subtle);
       padding-top: 1rem;
       margin-top: auto;
     }
   }
 }
 
+// ── States ────────────────────────────────────────────────────────────────────
 .loading-error {
   text-align: center;
   padding: 1rem;
-  color: #f44336;
-  background: #ffebee;
-  border-radius: 8px;
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: var(--radius-md);
   margin: 1rem 0;
 }
 
@@ -125,13 +154,14 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  padding: 2rem;
-  color: #666;
+  padding: 3rem;
+  color: var(--text-muted);
 
   mat-icon {
-    font-size: 2rem;
-    width: 2rem;
-    height: 2rem;
-    opacity: 0.5;
+    font-size: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    opacity: 0.4;
+    color: var(--text-muted);
   }
 }

@@ -6,20 +6,20 @@
   h2 {
     text-align: center;
     margin-bottom: 2rem;
-    font-size: 2rem;
-    font-weight: 500;
-    color: #2c3e50;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
     position: relative;
 
-    &:after {
+    &::after {
       content: '';
       position: absolute;
       bottom: -8px;
       right: 50%;
       transform: translateX(50%);
-      width: 50px;
+      width: 48px;
       height: 3px;
-      background: linear-gradient(135deg, #3f51b5 0%, #2196f3 100%);
+      background: var(--accent-grad);
       border-radius: 2px;
     }
   }
@@ -28,10 +28,11 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
-    background: white;
+    background: var(--bg-surface);
     padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-subtle);
 
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
@@ -41,23 +42,10 @@
     mat-form-field {
       width: 100%;
 
-      &.full-width {
-        grid-column: 1 / -1;
-      }
+      &.full-width { grid-column: 1 / -1; }
 
-      .mat-mdc-form-field-wrapper {
-        padding-bottom: 0;
-      }
-
-      input, textarea {
-        font-size: 1rem;
-      }
-
-      &.mat-focused {
-        .mat-form-field-label {
-          color: #3f51b5;
-        }
-      }
+      input,
+      textarea { font-size: 1rem; color: var(--text-primary); }
     }
 
     .form-actions {
@@ -69,79 +57,62 @@
 
       @media (max-width: 768px) {
         flex-direction: column;
-
-        button {
-          width: 100%;
-        }
+        button { width: 100%; }
       }
 
       button {
         min-width: 120px;
         padding: 0.5rem 2rem;
+        border-radius: var(--radius-sm);
+        transition: transform 0.2s, box-shadow 0.2s;
 
         &[color="primary"] {
-          background: linear-gradient(135deg, #3f51b5 0%, #2196f3 100%);
+          background: var(--accent-grad);
           color: white;
           border: none;
-          border-radius: 8px;
-          transition: all 0.3s ease;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          box-shadow: var(--shadow-sm);
 
           &:hover:not([disabled]) {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
           }
 
-          &[disabled] {
-            opacity: 0.7;
-            cursor: not-allowed;
-          }
+          &[disabled] { opacity: 0.5; cursor: not-allowed; }
         }
 
         &[type="button"] {
           background: transparent;
-          color: #718096;
-          border: 1px solid #e2e8f0;
-          border-radius: 8px;
-          transition: all 0.3s ease;
+          color: var(--text-secondary);
+          border: 1px solid var(--border-default);
 
           &:hover {
-            background: #f8f9fa;
-            color: #2d3748;
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            border-color: var(--border-default);
           }
         }
       }
     }
   }
 
-  // אנימציות
   .mat-mdc-form-field {
-    transition: all 0.3s ease;
-
-    &:hover {
-      transform: translateY(-1px);
-    }
+    transition: transform 0.2s ease;
+    &:hover { transform: translateY(-1px); }
   }
 
-  // שגיאות ולידציה
   .mat-mdc-form-field-error {
     font-size: 0.85rem;
     margin-top: 0.25rem;
-    color: #e53e3e;
+    color: #fca5a5;
   }
 }
 
-// רספונסיביות נוספת
 @media screen and (max-width: 480px) {
   .customer-form-container {
     padding: 1rem;
 
-    h2 {
-      font-size: 1.5rem;
-    }
+    h2 { font-size: 1.4rem; }
 
-    .customer-form {
-      padding: 1rem;
-    }
+    .customer-form { padding: 1rem; }
   }
 }

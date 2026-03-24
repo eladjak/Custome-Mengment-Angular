@@ -1,68 +1,76 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles — Dark Mode Facelift */
 @use "@angular/material" as mat;
 @use "sass:math";
 
 // Include the common styles for Angular Material
 @include mat.core();
 
-// Define the primary and accent palettes
-$primary-palette: mat.define-palette(mat.$indigo-palette);
-$accent-palette: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$warn-palette: mat.define-palette(mat.$red-palette);
+// ── Dark palette: purple primary, cyan accent ──────────────────────────────
+$primary-palette: mat.define-palette(mat.$deep-purple-palette, 300, 100, 500);
+$accent-palette:  mat.define-palette(mat.$cyan-palette, 400, 200, 600);
+$warn-palette:    mat.define-palette(mat.$red-palette, 400);
 
-// Create the theme object
-$theme: mat.define-light-theme(
+$theme: mat.define-dark-theme(
   (
     color: (
       primary: $primary-palette,
-      accent: $accent-palette,
-      warn: $warn-palette,
+      accent:  $accent-palette,
+      warn:    $warn-palette,
     ),
     typography: mat.define-typography-config(),
     density: 0,
   )
 );
 
-// Include theme styles for core and each component used
 @include mat.all-component-themes($theme);
 
-// Breakpoints
+// ── Design tokens ───────────────────────────────────────────────────────────
+:root {
+  --bg-base:        #0f1117;
+  --bg-surface:     #1a1d27;
+  --bg-elevated:    #232636;
+  --bg-hover:       #2a2e42;
+  --border-subtle:  rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.14);
+  --text-primary:   #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted:     #64748b;
+  --accent-purple:  #a78bfa;
+  --accent-cyan:    #22d3ee;
+  --accent-grad:    linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+  --radius-sm:      6px;
+  --radius-md:      10px;
+  --radius-lg:      16px;
+  --shadow-sm:      0 1px 3px rgba(0,0,0,.4);
+  --shadow-md:      0 4px 12px rgba(0,0,0,.5);
+  --shadow-lg:      0 8px 24px rgba(0,0,0,.6);
+}
+
+// ── Breakpoints ─────────────────────────────────────────────────────────────
 $breakpoint-xs: 0;
 $breakpoint-sm: 600px;
 $breakpoint-md: 960px;
 $breakpoint-lg: 1280px;
 $breakpoint-xl: 1920px;
 
-// Mixins for responsive design
 @mixin respond-to($breakpoint) {
   @if $breakpoint == xs {
-    @media (max-width: #{$breakpoint-sm - 1}) {
-      @content;
-    }
+    @media (max-width: #{$breakpoint-sm - 1}) { @content; }
   }
   @if $breakpoint == sm {
-    @media (min-width: #{$breakpoint-sm}) and (max-width: #{$breakpoint-md - 1}) {
-      @content;
-    }
+    @media (min-width: #{$breakpoint-sm}) and (max-width: #{$breakpoint-md - 1}) { @content; }
   }
   @if $breakpoint == md {
-    @media (min-width: #{$breakpoint-md}) and (max-width: #{$breakpoint-lg - 1}) {
-      @content;
-    }
+    @media (min-width: #{$breakpoint-md}) and (max-width: #{$breakpoint-lg - 1}) { @content; }
   }
   @if $breakpoint == lg {
-    @media (min-width: #{$breakpoint-lg}) and (max-width: #{$breakpoint-xl - 1}) {
-      @content;
-    }
+    @media (min-width: #{$breakpoint-lg}) and (max-width: #{$breakpoint-xl - 1}) { @content; }
   }
   @if $breakpoint == xl {
-    @media (min-width: #{$breakpoint-xl}) {
-      @content;
-    }
+    @media (min-width: #{$breakpoint-xl}) { @content; }
   }
 }
 
-// Grid mixins
 @mixin make-col($size) {
   position: relative;
   width: 100%;
@@ -72,7 +80,7 @@ $breakpoint-xl: 1920px;
   max-width: calc(($size / 12) * 100%);
 }
 
-// Global styles
+// ── Base ─────────────────────────────────────────────────────────────────────
 html,
 body {
   height: 100%;
@@ -83,62 +91,28 @@ body {
 body {
   direction: rtl;
   margin: 0;
-  background-color: #fafafa;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
 }
 
-// RTL fixes for Material components
+// ── RTL fixes for Material ───────────────────────────────────────────────────
 [dir="rtl"] {
-  .mat-mdc-form-field {
-    text-align: right;
-  }
-
-  .mat-mdc-paginator {
-    direction: ltr;
-  }
-
-  .mat-mdc-table {
-    direction: rtl;
-  }
-
-  .mat-mdc-select {
-    text-align: right;
-  }
-
-  .mat-mdc-option {
-    text-align: right;
-  }
-
-  .mat-mdc-datepicker-toggle {
-    direction: ltr;
-  }
-
-  .mat-sort-header-container {
-    justify-content: flex-start !important;
-  }
-
-  .mat-mdc-paginator-container {
-    justify-content: flex-start !important;
-  }
-
-  .mat-mdc-form-field-subscript-wrapper {
-    text-align: right !important;
-  }
-
-  .mat-mdc-chip {
-    direction: rtl !important;
-  }
+  .mat-mdc-form-field        { text-align: right; }
+  .mat-mdc-paginator         { direction: ltr; }
+  .mat-mdc-table             { direction: rtl; }
+  .mat-mdc-select            { text-align: right; }
+  .mat-mdc-option            { text-align: right; }
+  .mat-mdc-datepicker-toggle { direction: ltr; }
+  .mat-sort-header-container        { justify-content: flex-start !important; }
+  .mat-mdc-paginator-container      { justify-content: flex-start !important; }
+  .mat-mdc-form-field-subscript-wrapper { text-align: right !important; }
+  .mat-mdc-chip                     { direction: rtl !important; }
 }
 
-// Common utility classes
-.full-width {
-  width: 100%;
-}
+// ── Utilities ────────────────────────────────────────────────────────────────
+.full-width  { width: 100%; }
+.text-center { text-align: center; }
 
-.text-center {
-  text-align: center;
-}
-
-// Responsive container
 .container {
   width: 100%;
   padding-right: 16px;
@@ -146,36 +120,20 @@ body {
   margin-right: auto;
   margin-left: auto;
 
-  @include respond-to(sm) {
-    max-width: 540px;
-  }
-
-  @include respond-to(md) {
-    max-width: 720px;
-  }
-
-  @include respond-to(lg) {
-    max-width: 960px;
-  }
-
-  @include respond-to(xl) {
-    max-width: 1140px;
-  }
+  @include respond-to(sm) { max-width: 540px; }
+  @include respond-to(md) { max-width: 720px; }
+  @include respond-to(lg) { max-width: 960px; }
+  @include respond-to(xl) { max-width: 1140px; }
 }
 
-// Form styles
+// ── Form container ───────────────────────────────────────────────────────────
 .form-container {
   max-width: 100%;
   margin: 20px auto;
   padding: 20px;
 
-  @include respond-to(sm) {
-    max-width: 540px;
-  }
-
-  @include respond-to(md) {
-    max-width: 600px;
-  }
+  @include respond-to(sm) { max-width: 540px; }
+  @include respond-to(md) { max-width: 600px; }
 
   mat-form-field {
     width: 100%;
@@ -190,57 +148,55 @@ body {
 
     @include respond-to(xs) {
       flex-direction: column;
-      button {
-        width: 100%;
-      }
+      button { width: 100%; }
     }
   }
 }
 
-// Table styles
+// ── Table container ──────────────────────────────────────────────────────────
 .table-container {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   margin: 1rem 0;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-subtle);
 
   .mat-mdc-table {
     width: 100%;
-    background: white;
+    background: var(--bg-surface);
 
     .mat-mdc-header-row {
-      background-color: #f8fafc;
+      background-color: var(--bg-elevated);
       height: 60px;
     }
 
     .mat-mdc-header-cell {
-      color: #1a202c;
+      color: var(--text-primary);
       font-size: 1.1rem;
       font-weight: 600;
       padding: 1rem;
       white-space: nowrap;
-      border-bottom: 2px solid #e2e8f0;
+      border-bottom: 2px solid var(--border-default);
     }
 
     .mat-mdc-row {
       height: 60px;
-      transition: all 0.3s ease;
+      transition: background 0.2s ease, transform 0.2s ease;
 
       &:hover {
-        background-color: #f8fafc;
-        transform: translateY(-2px);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        background-color: var(--bg-hover);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-sm);
       }
     }
 
     .mat-mdc-cell {
-      color: #2d3748;
+      color: var(--text-primary);
       font-size: 1rem;
       padding: 1rem;
-      border-bottom: 1px solid #edf2f7;
+      border-bottom: 1px solid var(--border-subtle);
 
-      // Status and priority chips
       .mat-mdc-chip {
         font-size: 0.9rem;
         font-weight: 500;
@@ -249,15 +205,14 @@ body {
       }
     }
 
-    // Actions column
     .mat-column-actions {
       width: 120px;
       white-space: nowrap;
       text-align: center;
 
       button {
-        opacity: 0.7;
-        transition: all 0.3s ease;
+        opacity: 0.75;
+        transition: opacity 0.2s, transform 0.2s;
         margin: 0 0.2rem;
 
         &:hover {
@@ -265,17 +220,15 @@ body {
           transform: translateY(-2px);
         }
 
-        mat-icon {
-          font-size: 1.2rem;
-        }
+        mat-icon { font-size: 1.2rem; }
       }
     }
   }
 
-  // Mobile optimizations
+  // Mobile card layout
   @media screen and (max-width: 768px) {
     margin: 0.5rem 0;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
 
     .mat-mdc-table {
       .mat-mdc-header-row,
@@ -289,57 +242,34 @@ body {
         padding: 0.5rem;
         font-size: 0.9rem;
         min-width: 100px;
-
-        &:first-child {
-          padding-right: 0.5rem;
-        }
-
-        &:last-child {
-          padding-left: 0.5rem;
-        }
       }
 
       .mat-column-actions {
         width: 90px;
-
-        button {
-          padding: 0.3rem;
-
-          mat-icon {
-            font-size: 1.1rem;
-          }
-        }
+        button { padding: 0.3rem; mat-icon { font-size: 1.1rem; } }
       }
     }
   }
 }
 
-// Filter field styles
+// ── Filter field ─────────────────────────────────────────────────────────────
 .filter-field {
   width: 100%;
   max-width: 400px;
   margin-bottom: 1.5rem;
 
-  .mat-mdc-form-field-wrapper {
-    padding-bottom: 0;
-  }
-
   .mat-mdc-form-field-flex {
-    background-color: white;
-    border-radius: 8px;
+    background-color: var(--bg-elevated);
+    border-radius: var(--radius-sm);
     padding: 0.5rem 1rem;
   }
 
-  input {
-    font-size: 1rem;
-  }
+  input { font-size: 1rem; color: var(--text-primary); }
 
-  @media screen and (max-width: 768px) {
-    max-width: 100%;
-  }
+  @media screen and (max-width: 768px) { max-width: 100%; }
 }
 
-// Loading spinner
+// ── Loading / no-data ────────────────────────────────────────────────────────
 .loading-spinner {
   display: flex;
   justify-content: center;
@@ -347,11 +277,10 @@ body {
   min-height: 200px;
 }
 
-// No data message
 .no-data {
   text-align: center;
   padding: 20px;
-  color: rgba(0, 0, 0, 0.54);
+  color: var(--text-secondary);
   font-size: 16px;
 
   mat-icon {
@@ -362,186 +291,59 @@ body {
   }
 }
 
-// Material overrides
-.mat-mdc-form-field {
-  width: 100%;
-}
+// ── Material overrides ───────────────────────────────────────────────────────
+.mat-mdc-form-field { width: 100%; }
 
 .mat-mdc-table {
   width: 100%;
-  background: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: var(--bg-surface) !important;
+  box-shadow: var(--shadow-md);
 }
 
 .mat-mdc-header-cell {
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.87);
+  color: var(--text-primary) !important;
 }
 
 .mat-mdc-cell {
-  color: rgba(0, 0, 0, 0.87);
+  color: var(--text-primary) !important;
 }
 
 .mat-mdc-paginator {
-  background: white;
+  background: var(--bg-surface) !important;
+  color: var(--text-primary) !important;
 }
 
 .mat-mdc-card {
   margin-bottom: 16px;
+  background: var(--bg-surface) !important;
 }
 
-// Responsive toolbar
+// ── Toolbar ──────────────────────────────────────────────────────────────────
 .mat-toolbar {
   @include respond-to(xs) {
     padding: 0 8px;
-
-    .toolbar-title {
-      font-size: 18px;
-    }
-
+    .toolbar-title { font-size: 18px; }
     button {
       padding: 0 8px;
       min-width: auto;
-
-      mat-icon {
-        margin: 0;
-      }
-
-      span {
-        display: none;
-      }
+      mat-icon { margin: 0; }
+      span { display: none; }
     }
   }
 }
 
-// Status colors
-.status-new {
-  color: mat.get-color-from-palette($primary-palette);
-}
+// ── Status / priority chips ──────────────────────────────────────────────────
+.status-pending    { background-color: rgba(234, 179, 8, 0.2) !important;  color: #fde047 !important; }
+.status-in-progress{ background-color: rgba(59, 130, 246, 0.2) !important; color: #93c5fd !important; }
+.status-completed  { background-color: rgba(34, 197, 94, 0.2) !important;  color: #86efac !important; }
+.status-cancelled  { background-color: rgba(239, 68, 68, 0.2) !important;  color: #fca5a5 !important; }
 
-.status-in-progress {
-  color: mat.get-color-from-palette($accent-palette);
-}
+.priority-low   { background-color: rgba(34, 197, 94, 0.15) !important;  color: #86efac !important; }
+.priority-medium{ background-color: rgba(234, 179, 8, 0.15) !important;  color: #fde047 !important; }
+.priority-high  { background-color: rgba(239, 68, 68, 0.2)  !important;  color: #fca5a5 !important; }
 
-.status-completed {
-  color: mat.get-color-from-palette($warn-palette);
-}
-
-// Priority colors
-.priority-high {
-  color: mat.get-color-from-palette($warn-palette);
-}
-
-.priority-medium {
-  color: mat.get-color-from-palette($accent-palette);
-}
-
-.priority-low {
-  color: mat.get-color-from-palette($primary-palette);
-}
-
-// Responsive grid system
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
-}
-
-// Generate base columns
-@for $i from 1 through 12 {
-  .col-#{$i} {
-    @include make-col($i);
-  }
-}
-
-// Generate responsive columns
-@include respond-to(sm) {
-  @for $i from 1 through 12 {
-    .col-sm-#{$i} {
-      @include make-col($i);
-    }
-  }
-}
-
-@include respond-to(md) {
-  @for $i from 1 through 12 {
-    .col-md-#{$i} {
-      @include make-col($i);
-    }
-  }
-}
-
-@include respond-to(lg) {
-  @for $i from 1 through 12 {
-    .col-lg-#{$i} {
-      @include make-col($i);
-    }
-  }
-}
-
-// Spacing utilities
-$spacer: 1rem;
-$spacers: (
-  0: 0,
-  1: calc($spacer * 0.25),
-  2: calc($spacer * 0.5),
-  3: $spacer,
-  4: calc($spacer * 1.5),
-  5: calc($spacer * 3),
-);
-
-@each $size, $value in $spacers {
-  .m-#{$size} {
-    margin: $value !important;
-  }
-  .mt-#{$size} {
-    margin-top: $value !important;
-  }
-  .mr-#{$size} {
-    margin-right: $value !important;
-  }
-  .mb-#{$size} {
-    margin-bottom: $value !important;
-  }
-  .ml-#{$size} {
-    margin-left: $value !important;
-  }
-  .mx-#{$size} {
-    margin-right: $value !important;
-    margin-left: $value !important;
-  }
-  .my-#{$size} {
-    margin-top: $value !important;
-    margin-bottom: $value !important;
-  }
-
-  .p-#{$size} {
-    padding: $value !important;
-  }
-  .pt-#{$size} {
-    padding-top: $value !important;
-  }
-  .pr-#{$size} {
-    padding-right: $value !important;
-  }
-  .pb-#{$size} {
-    padding-bottom: $value !important;
-  }
-  .pl-#{$size} {
-    padding-left: $value !important;
-  }
-  .px-#{$size} {
-    padding-right: $value !important;
-    padding-left: $value !important;
-  }
-  .py-#{$size} {
-    padding-top: $value !important;
-    padding-bottom: $value !important;
-  }
-}
-
-// Header actions improvements
+// ── Header actions ───────────────────────────────────────────────────────────
 .header-actions {
   display: flex;
   justify-content: space-between;
@@ -553,7 +355,7 @@ $spacers: (
     font-size: 2rem;
     font-weight: 500;
     margin: 0;
-    color: #2d3748;
+    color: var(--text-primary);
   }
 
   .header-buttons {
@@ -563,43 +365,36 @@ $spacers: (
 
     button {
       &[mat-icon-button] {
-        background: linear-gradient(135deg, #3f51b5 0%, #2196f3 100%);
+        background: var(--accent-grad);
         color: white;
         width: 40px;
         height: 40px;
         line-height: 40px;
-        border-radius: 8px;
-        transition: all 0.3s ease;
+        border-radius: var(--radius-sm);
+        transition: transform 0.2s, box-shadow 0.2s;
 
         &:hover {
           transform: translateY(-2px);
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
         }
 
-        mat-icon {
-          margin: 0;
-          font-size: 20px;
-          width: 20px;
-          height: 20px;
-        }
+        mat-icon { margin: 0; font-size: 20px; width: 20px; height: 20px; }
       }
 
       &[mat-raised-button] {
-        background: linear-gradient(135deg, #3f51b5 0%, #2196f3 100%);
+        background: var(--accent-grad);
         color: white;
         padding: 0.5rem 1.5rem;
-        border-radius: 8px;
+        border-radius: var(--radius-sm);
         font-size: 1rem;
-        transition: all 0.3s ease;
+        transition: transform 0.2s, box-shadow 0.2s;
 
         &:hover {
           transform: translateY(-2px);
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
         }
 
-        mat-icon {
-          margin-left: 0.5rem;
-        }
+        mat-icon { margin-left: 0.5rem; }
       }
     }
   }
@@ -609,45 +404,31 @@ $spacers: (
     align-items: stretch;
     margin-bottom: 1.5rem;
 
-    h2 {
-      font-size: 1.5rem;
-      text-align: center;
-    }
+    h2 { font-size: 1.5rem; text-align: center; }
 
     .header-buttons {
       flex-direction: column;
-
-      button {
-        width: 100%;
-        justify-content: center;
-      }
+      button { width: 100%; justify-content: center; }
     }
   }
 }
 
-// Even more minimal tooltip styles
+// ── Tooltip ──────────────────────────────────────────────────────────────────
 .mat-mdc-tooltip {
-  background: rgba(0, 0, 0, 0.6) !important;
-  color: white !important;
+  background: rgba(15, 17, 23, 0.92) !important;
+  color: var(--text-primary) !important;
   font-size: 0.8rem !important;
   padding: 4px 8px !important;
   border-radius: 4px !important;
-  box-shadow: none !important;
+  border: 1px solid var(--border-subtle) !important;
+  box-shadow: var(--shadow-sm) !important;
   max-width: 200px !important;
-  text-align: center !important;
-  line-height: 1.3 !important;
-  z-index: 1000 !important;
-  backdrop-filter: none !important;
-  border: none !important;
-  margin: 0 !important;
 }
 
-// Enhanced responsive table styles
+// ── Mobile card overrides ─────────────────────────────────────────────────────
 .table-container {
   @media screen and (max-width: 768px) {
-    margin: 0;
-    padding: 0.5rem;
-    background: #f8fafc;
+    background: var(--bg-base);
 
     .mat-mdc-table {
       display: block;
@@ -656,129 +437,86 @@ $spacers: (
       border: none;
       background: transparent;
 
-      .mat-mdc-header-row {
-        display: none;
-      }
+      .mat-mdc-header-row { display: none; }
 
       .mat-mdc-row {
         display: block;
         margin-bottom: 1rem;
-        background: white;
-        border-radius: 16px;
-        box-shadow:
-          0 4px 6px -1px rgba(0, 0, 0, 0.1),
-          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        background: var(--bg-surface);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
         position: relative;
         padding: 1.25rem;
         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 1px solid #e2e8f0;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid var(--border-subtle);
         overflow: hidden;
 
-        // Hover effect
         &:hover {
           transform: translateY(-2px);
-          box-shadow:
-            0 10px 15px -3px rgba(0, 0, 0, 0.1),
-            0 4px 6px -2px rgba(0, 0, 0, 0.05);
+          box-shadow: var(--shadow-lg);
+          border-color: var(--border-default);
         }
 
-        // Active state
-        &:active {
-          transform: scale(0.98);
-        }
-
-        // Subtle gradient background
         &::before {
           content: "";
           position: absolute;
           top: 0;
           left: 0;
           right: 0;
-          height: 6px;
-          background: linear-gradient(135deg, #3f51b5 0%, #2196f3 100%);
-          opacity: 0.8;
+          height: 3px;
+          background: var(--accent-grad);
         }
 
-        // Main content
         .mat-mdc-cell {
           display: block;
           padding: 0.75rem 0;
           border: none;
           font-size: 0.95rem;
+          color: var(--text-primary);
           text-align: right;
           white-space: normal;
           height: auto;
           min-height: unset;
-          position: relative;
-          transition: background-color 0.2s ease;
 
           &::before {
             content: attr(data-label);
             display: block;
             font-weight: 500;
-            color: #64748b;
-            font-size: 0.85rem;
-            margin-bottom: 0.35rem;
-            letter-spacing: 0.025em;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
           }
 
-          &:not(:last-child) {
-            border-bottom: 1px solid #f1f5f9;
-          }
+          &:not(:last-child) { border-bottom: 1px solid var(--border-subtle); }
 
-          // Title styling
           &[data-label="כותרת"] {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 600;
-            color: #1e293b;
-            padding-top: 0.5rem;
-            letter-spacing: -0.025em;
+            color: var(--text-primary);
           }
 
-          // Description styling
           &[data-label="תיאור"] {
-            color: #475569;
+            color: var(--text-secondary);
             font-size: 0.95rem;
             line-height: 1.6;
-            padding: 1rem 0;
-            background: #f8fafc;
+            background: var(--bg-elevated);
             margin: 0.5rem -1.25rem;
             padding: 1rem 1.25rem;
           }
 
-          // Customer styling
           &[data-label="לקוח"] {
-            color: #3b82f6;
+            color: var(--accent-cyan);
             font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-
-            &::after {
-              content: "👤";
-              font-size: 1.1rem;
-            }
           }
 
-          // Due date styling
           &[data-label="תאריך יעד"] {
-            color: #64748b;
+            color: var(--text-secondary);
             font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #f8fafc;
-            margin: 0 -1.25rem;
-            padding: 0.75rem 1.25rem;
-
-            &::after {
-              content: "📅";
-              font-size: 1.1rem;
-            }
           }
 
-          // Status and Priority chips
           .mat-mdc-chip-list {
             display: flex;
             justify-content: flex-end;
@@ -790,154 +528,81 @@ $spacers: (
               padding: 0 12px;
               border-radius: 14px;
               font-weight: 500;
-              box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-              transition: all 0.2s ease;
+              transition: transform 0.2s ease;
 
-              &:hover {
-                transform: translateY(-1px);
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-              }
+              &:hover { transform: translateY(-1px); }
 
-              &.status-pending {
-                background: #fef3c7 !important;
-                color: #92400e !important;
-              }
-
-              &.status-in-progress {
-                background: #dbeafe !important;
-                color: #1e40af !important;
-              }
-
-              &.status-completed {
-                background: #dcfce7 !important;
-                color: #166534 !important;
-              }
-
-              &.status-cancelled {
-                background: #fee2e2 !important;
-                color: #991b1b !important;
-              }
-
-              &.priority-low {
-                background: #f3f4f6 !important;
-                color: #374151 !important;
-              }
-
-              &.priority-medium {
-                background: #fef3c7 !important;
-                color: #92400e !important;
-              }
-
-              &.priority-high {
-                background: #fee2e2 !important;
-                color: #991b1b !important;
-              }
+              &.status-pending    { background: rgba(234,179,8,.18) !important;  color: #fde047 !important; }
+              &.status-in-progress{ background: rgba(59,130,246,.18) !important; color: #93c5fd !important; }
+              &.status-completed  { background: rgba(34,197,94,.18) !important;  color: #86efac !important; }
+              &.status-cancelled  { background: rgba(239,68,68,.18) !important;  color: #fca5a5 !important; }
+              &.priority-low      { background: rgba(34,197,94,.12) !important;  color: #86efac !important; }
+              &.priority-medium   { background: rgba(234,179,8,.15) !important;  color: #fde047 !important; }
+              &.priority-high     { background: rgba(239,68,68,.18) !important;  color: #fca5a5 !important; }
             }
-          }
-
-          // Checkbox styling
-          .mat-mdc-checkbox {
-            margin-right: -8px;
-            transform: scale(1.1);
           }
         }
 
-        // Actions container
         .mat-column-actions {
           display: flex;
           justify-content: flex-end;
           gap: 0.75rem;
-          padding: 1rem 0 0;
           margin: 0.5rem -1.25rem 0;
           padding: 1rem 1.25rem 0;
-          border-top: 1px solid #e2e8f0;
-          background: linear-gradient(to bottom, transparent, white 15%);
+          border-top: 1px solid var(--border-subtle);
 
-          &::before {
-            display: none;
-          }
+          &::before { display: none; }
 
           button {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
 
             &[color="primary"] {
-              background: #eff6ff;
-              color: #3b82f6;
-              &:hover {
-                background: #dbeafe;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
-              }
+              background: rgba(167, 139, 250, 0.12);
+              color: var(--accent-purple);
+              &:hover { background: rgba(167,139,250,.22); transform: translateY(-2px); }
             }
 
             &[color="warn"] {
-              background: #fef2f2;
-              color: #ef4444;
-              &:hover {
-                background: #fee2e2;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 6px rgba(239, 68, 68, 0.2);
-              }
+              background: rgba(239, 68, 68, 0.1);
+              color: #fca5a5;
+              &:hover { background: rgba(239,68,68,.2); transform: translateY(-2px); }
             }
 
-            mat-icon {
-              font-size: 24px;
-              width: 24px;
-              height: 24px;
-            }
-
-            &:active {
-              transform: scale(0.95);
-            }
+            mat-icon { font-size: 22px; width: 22px; height: 22px; }
           }
         }
       }
     }
 
-    // Paginator styling
     .mat-mdc-paginator {
-      background: white;
+      background: var(--bg-surface) !important;
       margin-top: 1rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
     }
 
-    // Loading bar
-    .loading-bar {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      border-radius: 12px 12px 0 0;
-    }
-
-    // Error message
     .error-message {
-      background: #fee2e2;
-      color: #991b1b;
+      background: rgba(239, 68, 68, 0.12);
+      color: #fca5a5;
       padding: 1rem;
-      border-radius: 12px;
+      border-radius: var(--radius-md);
       margin: 1rem 0;
       display: flex;
       align-items: center;
       gap: 0.5rem;
       font-size: 0.9rem;
-      box-shadow: 0 2px 4px rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
 
-      mat-icon {
-        color: #ef4444;
-      }
+      mat-icon { color: #fca5a5; }
     }
 
-    // No data message
     .no-data-message {
       padding: 3rem 1rem;
       text-align: center;
-      color: #64748b;
+      color: var(--text-secondary);
       font-size: 0.95rem;
 
       mat-icon {
@@ -945,51 +610,20 @@ $spacers: (
         width: 64px;
         height: 64px;
         margin-bottom: 1rem;
-        opacity: 0.5;
-        color: #94a3b8;
+        opacity: 0.4;
+        color: var(--text-muted);
       }
     }
   }
 }
 
-// Status and priority colors
-.status-pending {
-  background-color: #ecc94b !important;
-  color: #744210 !important;
-}
-.status-in-progress {
-  background-color: #4299e1 !important;
-  color: white !important;
-}
-.status-completed {
-  background-color: #48bb78 !important;
-  color: white !important;
-}
-.status-cancelled {
-  background-color: #f56565 !important;
-  color: white !important;
-}
-
-.priority-low {
-  background-color: #9ae6b4 !important;
-  color: #22543d !important;
-}
-.priority-medium {
-  background-color: #fbd38d !important;
-  color: #744210 !important;
-}
-.priority-high {
-  background-color: #fc8181 !important;
-  color: #742a2a !important;
-}
-
-// Footer improvements
+// ── Footer ───────────────────────────────────────────────────────────────────
 .app-footer {
-  background: linear-gradient(135deg, #3f51b5 0%, #2196f3 100%);
-  color: white;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-default);
+  color: var(--text-secondary);
   padding: 1rem 0;
   margin-top: auto;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 
   .footer-content {
     max-width: 1200px;
@@ -1010,99 +644,75 @@ $spacers: (
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        color: white;
+        color: var(--text-secondary);
         text-decoration: none;
         padding: 0.5rem;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(4px);
+        border-radius: var(--radius-sm);
+        transition: color 0.2s, background 0.2s;
+        background: transparent;
 
-        mat-icon {
-          font-size: 20px;
-          width: 20px;
-          height: 20px;
-        }
-
-        span {
-          display: none; // Hidden by default on mobile
-          font-size: 0.9rem;
-          white-space: nowrap;
-        }
+        mat-icon { font-size: 20px; width: 20px; height: 20px; }
+        span { display: none; font-size: 0.9rem; white-space: nowrap; }
 
         &:hover {
           transform: translateY(-2px);
-          background: rgba(255, 255, 255, 0.2);
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          color: var(--accent-purple);
+          background: rgba(167, 139, 250, 0.08);
         }
       }
     }
 
     .footer-copyright {
       font-size: 0.85rem;
-      opacity: 0.8;
+      opacity: 0.6;
       text-align: center;
     }
   }
 }
 
-// Show footer text on larger screens
 @media screen and (min-width: 768px) {
-  .app-footer {
-    .footer-content {
-      padding: 0 2rem;
-      gap: 1rem;
+  .app-footer .footer-content {
+    padding: 0 2rem;
+    gap: 1rem;
 
-      .footer-links {
-        gap: 1.5rem;
+    .footer-links {
+      gap: 1.5rem;
 
-        .footer-link {
-          padding: 0.5rem 1rem;
-
-          span {
-            display: inline-block;
-          }
-
-          mat-icon {
-            font-size: 24px;
-            width: 24px;
-            height: 24px;
-          }
-        }
-      }
-
-      .footer-copyright {
-        font-size: 0.9rem;
+      .footer-link {
+        padding: 0.5rem 1rem;
+        span { display: inline-block; }
+        mat-icon { font-size: 24px; width: 24px; height: 24px; }
       }
     }
+
+    .footer-copyright { font-size: 0.9rem; }
   }
 }
 
-// Unified refresh button style
+// ── Refresh button ───────────────────────────────────────────────────────────
 .refresh-button {
-  background: linear-gradient(135deg, #3f51b5 0%, #2196f3 100%) !important;
+  background: var(--accent-grad) !important;
   color: white !important;
   width: 40px !important;
   height: 40px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  border-radius: 8px !important;
-  transition: all 0.3s ease !important;
+  border-radius: var(--radius-sm) !important;
+  transition: transform 0.2s, box-shadow 0.2s !important;
   padding: 0 !important;
   min-width: unset !important;
   line-height: 1 !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: var(--shadow-sm) !important;
 
   &:hover {
     transform: translateY(-2px) !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
-    background: linear-gradient(135deg, #5c6bc0 0%, #42a5f5 100%) !important;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4) !important;
   }
 
   &:active {
     transform: translateY(0) !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: var(--shadow-sm) !important;
   }
 
   mat-icon {
@@ -1115,54 +725,87 @@ $spacers: (
     animation-play-state: paused;
   }
 
-  &.loading mat-icon {
-    animation-play-state: running;
-  }
+  &.loading mat-icon { animation-play-state: running; }
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
-// Snackbar styles
+// ── Snackbar ─────────────────────────────────────────────────────────────────
 .error-snackbar {
-  background: #f44336;
-  color: white;
-
-  .mat-simple-snackbar-action {
-    color: white;
-  }
+  background: rgba(239, 68, 68, 0.9) !important;
+  color: white !important;
 }
 
 .success-snackbar {
-  background: #4caf50;
-  color: white;
-
-  .mat-simple-snackbar-action {
-    color: white;
-  }
+  background: rgba(34, 197, 94, 0.9) !important;
+  color: white !important;
 }
 
-// Loading overlay
+// ── Loading overlay ───────────────────────────────────────────────────────────
 .loading-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(15, 17, 23, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
 
-  .loading-spinner {
-    width: 50px;
-    height: 50px;
-  }
+  .loading-spinner { width: 50px; height: 50px; }
+}
+
+// ── Grid system ───────────────────────────────────────────────────────────────
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+@for $i from 1 through 12 {
+  .col-#{$i} { @include make-col($i); }
+}
+
+@include respond-to(sm) {
+  @for $i from 1 through 12 { .col-sm-#{$i} { @include make-col($i); } }
+}
+@include respond-to(md) {
+  @for $i from 1 through 12 { .col-md-#{$i} { @include make-col($i); } }
+}
+@include respond-to(lg) {
+  @for $i from 1 through 12 { .col-lg-#{$i} { @include make-col($i); } }
+}
+
+// ── Spacing utilities ─────────────────────────────────────────────────────────
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: calc($spacer * 0.25),
+  2: calc($spacer * 0.5),
+  3: $spacer,
+  4: calc($spacer * 1.5),
+  5: calc($spacer * 3),
+);
+
+@each $size, $value in $spacers {
+  .m-#{$size}  { margin: $value !important; }
+  .mt-#{$size} { margin-top: $value !important; }
+  .mr-#{$size} { margin-right: $value !important; }
+  .mb-#{$size} { margin-bottom: $value !important; }
+  .ml-#{$size} { margin-left: $value !important; }
+  .mx-#{$size} { margin-right: $value !important; margin-left: $value !important; }
+  .my-#{$size} { margin-top: $value !important; margin-bottom: $value !important; }
+  .p-#{$size}  { padding: $value !important; }
+  .pt-#{$size} { padding-top: $value !important; }
+  .pr-#{$size} { padding-right: $value !important; }
+  .pb-#{$size} { padding-bottom: $value !important; }
+  .pl-#{$size} { padding-left: $value !important; }
+  .px-#{$size} { padding-right: $value !important; padding-left: $value !important; }
+  .py-#{$size} { padding-top: $value !important; padding-bottom: $value !important; }
 }
