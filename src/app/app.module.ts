@@ -26,6 +26,7 @@ import { CustomerService } from './services/customer.service';
 import { TaskService } from './services/task.service';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
+import { DemoModeInterceptor } from './interceptors/demo-mode.interceptor';
 
 // Routes
 import { routes } from './app.routes';
@@ -76,6 +77,7 @@ const MY_DATE_FORMATS = {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline' },
     },
+    { provide: HTTP_INTERCEPTORS, useClass: DemoModeInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
