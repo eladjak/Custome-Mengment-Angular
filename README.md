@@ -1,59 +1,58 @@
-# Client
+# Customer Management CRM
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.5.
+A full-stack customer and task management system built with Angular 17 and Angular Material. Features a responsive dashboard, customer CRUD operations, task management, and PWA support.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- Customer management with CRUD operations
+- Task management and assignment
+- Responsive dashboard with Angular Material
+- Service worker for PWA / offline support
+- Route guards and HTTP interceptors
+- TypeScript throughout
+
+## Tech Stack
+
+| Technology | Purpose |
+|-----------|---------|
+| [Angular 17](https://angular.io/) | Frontend framework |
+| [Angular Material](https://material.angular.io/) | UI component library |
+| [Angular CDK](https://material.angular.io/cdk) | Component Dev Kit |
+| [TypeScript](https://www.typescriptlang.org/) | Type safety |
+| [RxJS](https://rxjs.dev/) | Reactive programming |
+
+## Getting Started
 
 ```bash
+git clone https://github.com/eladjak/Custome-Mengment-Angular.git
+cd Custome-Mengment-Angular
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open [http://localhost:4200](http://localhost:4200) in your browser.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Build for Production
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Project Structure
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
+```
+Custome-Mengment-Angular/
+├── src/app/
+│   ├── components/     # Feature components
+│   ├── interceptors/   # HTTP interceptors
+│   ├── models/         # TypeScript interfaces
+│   ├── services/       # API and data services
+│   ├── app.module.ts   # Root module
+│   └── app.routes.ts   # Route configuration
+├── public/             # Static assets
+└── angular.json        # Angular CLI config
 ```
 
-## Running end-to-end tests
+## License
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+MIT
